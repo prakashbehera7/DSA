@@ -10,23 +10,37 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        if(head==null|| head.next==null){
+        if(head==null ||head.next==null){
+            System.out.println("List is empty.");
             return true;
         }
-        ListNode temp=head;
-        Deque<Integer> stack=new ArrayDeque<>();
-        while(temp!=null){
-            stack.push(temp.val);
-            temp=temp.next;
+        ListNode fast=head;
+        ListNode slow=head;
+        ListNode firstHalf=head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
         }
-        temp=head;
+        ListNode secondHalf=reverse(slow.next);
+        ListNode temp=secondHalf;
         while(temp!=null){
-            if(temp.val!=stack.peek()){
+            if(firstHalf.val!=temp.val){
                 return false;
             }
-            stack.pop();
+            firstHalf=firstHalf.next;
             temp=temp.next;
         }
         return true;
+    }
+    public ListNode reverse(ListNode head){
+        ListNode current=head;
+        ListNode prev=null;
+        while(current!=null){
+        ListNode dummy=current.next;
+        current.next=prev;
+        prev=current;
+        current=dummy;
+        }
+        return prev;
     }
 }
