@@ -13,20 +13,15 @@ class Solution {
         if(head.next==null){
             return null;
         }
-        ListNode temp=head;
-        int length=0;
-        while(temp!=null){
-            length++;
-            temp=temp.next;
+        ListNode fast=head;
+        ListNode slow=head;
+        ListNode prev=null;
+        while(fast!=null && fast.next!=null){
+            prev=slow;
+            slow=slow.next;
+            fast=fast.next.next;
         }
-        temp=head;
-        int mid=length/2;
-        int i=0;
-        while(i<mid-1){
-            temp=temp.next;
-            i++;
-        }
-        temp.next=temp.next.next;
+        prev.next=prev.next.next;
         return head;
     }
 }
